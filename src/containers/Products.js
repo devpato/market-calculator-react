@@ -5,8 +5,6 @@ import * as actionCreators from '../store/actions/index';
 const Products = props => {
 
     const products = useSelector(state => state.products);
-    const error = useSelector(state => state.error);
-
     const dispatch = useDispatch();
     const onLoadProducts = useCallback(() => dispatch(actionCreators.onLoadProducts()), [dispatch]);
 

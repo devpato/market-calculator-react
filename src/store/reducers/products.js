@@ -12,6 +12,11 @@ const reducer = (state = initialState, action) => {
                 products: action.payload,
                 error: null
             }
+        case actionTypes.LOAD_ERROR_PRODUCTS:
+            return {
+                products: action.payload,
+                error: null
+            }
         default:
             return state
     }

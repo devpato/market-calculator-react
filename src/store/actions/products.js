@@ -7,6 +7,13 @@ export const onLoadSuccessProducts = (res) => {
     };
 }
 
+export const onLoadErrorProducts = (error) => {
+    return {
+        type: actionTypes.LOAD_ERROR_PRODUCTS,
+        payload: error
+    };
+}
+
 export const onLoadProducts = () => {
     return (dispatch, getState) => {
         console.log('actions');
@@ -14,6 +21,8 @@ export const onLoadProducts = () => {
             .then(response => response.json())
             .then(res => {
                 dispatch(onLoadSuccessProducts(res));
+            }).catch(err => {
+                dispatch(onLoadErrorProducts(err));
             });
     };
 }
