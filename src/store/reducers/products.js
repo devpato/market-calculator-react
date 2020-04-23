@@ -1,3 +1,4 @@
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     products: [],
@@ -5,7 +6,15 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    return state;
+    switch (action.type) {
+        case actionTypes.LOAD_SUCCESS_PRODUCTS:
+            return {
+                products: action.payload,
+                error: null
+            }
+        default:
+            return state
+    }
 }
 
 export default reducer;

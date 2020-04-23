@@ -1,19 +1,25 @@
+import React, { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actionCreators from '../store/actions/index';
 
-import React from 'react';
-import { connect } from 'react-redux';
+const Products = props => {
 
-const products = ({ products, error }) => {
-    console.log('prop', products);
+    const products = useSelector(state => state.products);
+    const error = useSelector(state => state.error);
+
+    const dispatch = useDispatch();
+    const onLoadProducts = useCallback(() => dispatch(actionCreators.onLoadProducts()), [dispatch]);
+
+
+    useEffect(() => {
+        onLoadProducts();
+    }, [onLoadProducts]);
+
+    const flag = products.length > 0 ? 'YAY' : 'NAY';
+
     return (
-        <h1>Products</h1>
+        <p>{flag}</p>
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        products: state.products,
-        error: state.error
-    }
-}
-
-export default connect(mapStateToProps)(products);
+export default Products;

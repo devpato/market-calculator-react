@@ -1,0 +1,3 @@
+export {
+    onLoadProducts
+} from './products';
