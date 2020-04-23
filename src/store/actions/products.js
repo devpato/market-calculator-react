@@ -16,7 +16,6 @@ export const onLoadErrorProducts = (error) => {
 
 export const onLoadProducts = () => {
     return (dispatch, getState) => {
-        console.log('actions');
         fetch(BASE_PRODUCTS_URL + 'products.json')
             .then(response => response.json())
             .then(res => {
