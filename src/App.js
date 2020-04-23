@@ -2,7 +2,7 @@ import React from 'react';
 import Products from './containers/Products'
 import './App.css';
 
-function App() {
+const app = () => {
   return (
     <div className="App">
       <Products />
@@ -10,4 +10,4 @@ function App() {
   );
 }
 
-export default App;
+export default app;
