@@ -1,3 +1,4 @@
 export {
-    onLoadProducts
+    onLoadProducts,
+    addProduct
 } from './products';

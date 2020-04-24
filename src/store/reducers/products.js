@@ -12,11 +12,20 @@ const reducer = (state = initialState, action) => {
                 products: action.payload,
                 error: null
             }
-        case actionTypes.LOAD_ERROR_PRODUCTS:
+        case actionTypes.ERROR_PRODUCTS:
             return {
-                products: action.payload,
+                ...state,
+                error: action.payload
+            }
+        case actionTypes.ADD_PRODUCT: {
+            const products = [...state.products];
+            products.push(action.payload);
+            return {
+                products,
                 error: null
             }
+        }
+
         default:
             return state
     }
