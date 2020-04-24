@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actionCreators from '../store/actions/index';
-import DataTable from '../components/UI/DataTable'
+import ProductsTable from '../components/UI/Tables/ProductsTable/ProductsTable'
 
 
 const Products = () => {
@@ -10,27 +10,13 @@ const Products = () => {
     const dispatch = useDispatch();
     const onLoadProducts = useCallback(() => dispatch(actionCreators.onLoadProducts()), [dispatch]);
 
-    const tableHeaders = [
-        {
-            name: 'Name'
-        },
-        {
-            name: 'Precio'
-        },
-        {
-            name: 'Unidad'
-        }
-    ]
-
-
-
     useEffect(() => {
         onLoadProducts();
     }, [onLoadProducts]);
 
     return (
-        <DataTable data={products} headers={tableHeaders} />
+        products.length > 0 ? <ProductsTable data={products} /> : null
     );
-}
 
+}
 export default Products;
