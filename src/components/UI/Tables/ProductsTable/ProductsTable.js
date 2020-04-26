@@ -19,7 +19,7 @@ const ProductsTable = ({ data }) => {
     return (
         <>
             <MaterialTable
-                title="Products"
+                title="Productos"
                 columns={columns}
                 data={products}
                 editable={{
@@ -35,34 +35,27 @@ const ProductsTable = ({ data }) => {
                         }),
                     onRowUpdate: (newData, oldData) =>
                         new Promise((resolve) => {
-                            setTimeout(() => {
-                                resolve();
-                                if (oldData) {
-                                    setProducts((prevState) => {
-                                        const data = [...prevState.data];
-                                        data[data.indexOf(oldData)] = newData;
-                                        return { ...prevState, data };
-                                    });
-                                }
-                            }, 600);
+                            resolve();
+                            if (oldData) {
+                                setProducts((prevState) => {
+                                    const data = [...prevState];
+                                    const id = oldData.tableData.id;
+                                    data[id] = newData
+                                    return data;
+                                });
+                            }
                         }),
                     onRowDelete: (oldData) =>
                         new Promise((resolve) => {
-                            setTimeout(() => {
-                                resolve();
-                                setProducts((prevState) => {
-                                    const data = [...prevState.data];
-                                    data.splice(data.indexOf(oldData), 1);
-                                    return { ...prevState, data };
-                                });
-                            }, 600);
+                            resolve();
+                            setProducts((prevState) => {
+                                const data = [...prevState];
+                                data.splice(oldData.tableData.id, 1);
+                                return data
+                            });
                         }),
                 }}
             />
-            <button onClick={() => onAddProduct({
-                name: 'patoSS', precio: 1, unidad: 2
-            }
-            )}>Add</button>
         </>
     );
 }
