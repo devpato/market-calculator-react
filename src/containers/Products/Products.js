@@ -11,8 +11,10 @@ const Products = (props) => {
     const onLoadProducts = useCallback(() => dispatch(actionCreators.onLoadProducts()), [dispatch]);
 
     useEffect(() => {
-        onLoadProducts();
-    }, [onLoadProducts]);
+        if (products.length === 0) {
+            onLoadProducts();
+        }
+    }, [onLoadProducts, products]);
 
     return (
         products.length > 0 ? <ProductsTable data={products} /> : null

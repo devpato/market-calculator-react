@@ -14,8 +14,10 @@ const NewOrder = (pros) => {
     const [productsOrders, setProductsOrders] = useState([]);
 
     useEffect(() => {
-        onLoadProducts();
-    }, [onLoadProducts]);
+        if (products.length === 0) {
+            onLoadProducts();
+        }
+    }, [onLoadProducts, products]);
 
     const onAddProductHandler = (product) => {
         setProductsOrders(prevState => {

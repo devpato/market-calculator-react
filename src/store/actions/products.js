@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import db from '../../firebase'
 const BASE_PRODUCTS_URL = "https://market-calculator-20bb3.firebaseio.com/";
 
 export const onLoadSuccessProducts = (products) => {
@@ -38,32 +39,27 @@ export const onLoadErrorProducts = (error) => {
 
 export const onLoadProducts = () => {
     return (dispatch, getState) => {
-        fetch(BASE_PRODUCTS_URL + 'products.json')
-            .then(response => response.json())
-            .then(res => {
-                dispatch(onLoadSuccessProducts(res));
-            }).catch(err => {
-                dispatch(onLoadErrorProducts(err));
+        const products = [];
+        db.collection("products").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                products.push({ id: doc.id, ...doc.data() })
             });
+            dispatch(onLoadSuccessProducts(products));
+        }).catch(err => {
+            dispatch(onLoadErrorProducts(err));
+        });
     };
 }
 
 export const addProduct = (product) => {
     return (dispatch, getState) => {
-        dispatch(onAddSuccessProduct(product));
-        // fetch(BASE_PRODUCTS_URL + 'products.json', {
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(product)
-        // })
-        //     .then(response => response.json())
-        //     .then(res => {
-        //         dispatch(onAddSuccessProduct(product));
-        //     }).catch(err => {
-        //         dispatch(onLoadErrorProducts(err));
-        //     });
+        db.collection("products").add(product)
+            .then(function (docRef) {
+                dispatch(onAddSuccessProduct({ ...product, id: docRef.id }));
+            })
+            .catch(function (error) {
+                dispatch(onLoadErrorProducts(error));
+            });
     };
 }
 
