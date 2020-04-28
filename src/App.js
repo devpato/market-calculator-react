@@ -5,6 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import './App.css';
+import Navbar from '../src/components/UI/Navbar/Navbar';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -43,14 +44,14 @@ const App = (props) => {
       <Route path="/productos" exact render={(props) => <Products {...props} />} />
       <Route path="/clientes" exact render={(props) => <Clients {...props} />} />
       <Route path="/ordenes" exact render={(props) => <Orders {...props} />} />
-      <Route path="/nuevo" exact render={(props) => <Products {...props} />} />
-      <Route path="/" exact render={(props) => <NewOrder {...props} />} />
-      <Redirect to="/" />
+      <Route path="/nueva" exact render={(props) => <NewOrder {...props} />} />
+      <Redirect to="/nueva" />
     </Switch>
   );
 
   return (
     <div className="App">
+      <Navbar />
       <Suspense fallback={<Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
         <CircularProgress color="inherit" />
       </Backdrop>}>{routes}</Suspense>
