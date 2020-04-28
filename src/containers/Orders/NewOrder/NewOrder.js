@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import NewOrderForm from '../../../components/UI/Form/NewOrderForm';
+import NewOrderForm from '../../../components/UI/Forms/NewOrderForm';
 import NewOrdersTable from '../../../components/UI/Tables/NewOrderTable/NewOrderTable'
 import { useDispatch, useSelector } from 'react-redux';
 import * as actionCreators from '../../../store/actions/index';
@@ -36,7 +36,7 @@ const NewOrder = (pros) => {
     const onUpdateProductHandler = (updatedProduct, id) => {
         setProductsOrders((prevState) => {
             const data = [...prevState];
-            data[id] = updatedProduct;
+            data[id] = getProductTotalCost(updatedProduct);
             return data;
         });
     }

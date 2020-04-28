@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import MaterialTable from 'material-table';
 
 const NewOrdersTable = ({ products, deleteProduct, updateProduct }) => {
 
     const columns = [
-        { title: 'Nombre', field: 'nombre' },
+        {
+            title: 'Nombre', field: 'nombre', editable: 'never'
+        },
         { title: 'Cantidad', field: 'quantity', type: 'numeric' },
-        { title: 'Unidad', field: 'unidad', type: 'string' },
+        { title: 'Unidad', field: 'unidad', editable: 'never' },
         { title: 'Precio', field: 'precio', type: 'numeric' },
-        { title: 'Total', field: 'total', type: 'numeric' },
+        { title: 'Total', field: 'total', editable: 'never' },
     ];
 
     return (

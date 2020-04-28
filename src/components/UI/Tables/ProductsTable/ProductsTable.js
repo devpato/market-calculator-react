@@ -12,9 +12,9 @@ const ProductsTable = ({ data }) => {
     const onUpdateProduct = useCallback((product) => dispatch(actionCreators.udpateProduct(product)), [dispatch]);
 
     const columns = [
-        { title: 'Nombre', field: 'nombre' },
+        { title: 'Nombre', field: 'nombre', type: 'string' },
         { title: 'Precio', field: 'precio', type: 'numeric' },
-        { title: 'Unidad', field: 'unidad', type: 'numeric' },
+        { title: 'Unidad', field: 'unidad', type: 'string' },
     ];
     const [products, setProducts] = useState(data);
 
