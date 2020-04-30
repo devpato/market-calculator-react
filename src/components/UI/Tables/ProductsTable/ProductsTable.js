@@ -27,12 +27,12 @@ const ProductsTable = ({ data }) => {
                 onRowAdd: (newData) =>
                     new Promise((resolve, reject) => {
                         onAddProduct(newData);
-                        resolve();
                         setProducts((prevState) => {
                             const data = [...prevState];
                             data.push(newData);
                             return [...data];
-                        })
+                        });
+                        resolve();
                     }),
                 onRowUpdate: (newData, oldData) =>
                     new Promise((resolve, reject) => {
@@ -40,25 +40,24 @@ const ProductsTable = ({ data }) => {
                             const prod = newData;
                             delete prod.tableData;
                             onUpdateProduct({ id: newData.id, ...prod });
-                            resolve();
                             setProducts((prevState) => {
                                 const data = [...prevState];
                                 const id = oldData.tableData.id;
                                 data[id] = newData;
                                 return data;
                             });
+                            resolve();
                         }
                     }),
                 onRowDelete: (oldData) =>
                     new Promise((resolve, reject) => {
-                        console.log(oldData);
                         onRemoveProduct(oldData.id);
-                        resolve();
                         setProducts((prevState) => {
                             const data = [...prevState];
                             data.splice(oldData.tableData.id, 1);
                             return data
                         });
+                        resolve();
                     }),
             }}
         />

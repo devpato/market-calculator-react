@@ -11,13 +11,11 @@ const Products = (props) => {
     const onLoadProducts = useCallback(() => dispatch(actionCreators.onLoadProducts()), [dispatch]);
 
     useEffect(() => {
-        if (products.length === 0) {
-            onLoadProducts();
-        }
-    }, [onLoadProducts, products]);
+        onLoadProducts();
+    }, [onLoadProducts]);
 
     return (
-        products.length > 0 ? <ProductsTable data={products} /> : null
+        products.length > 0 ? <ProductsTable data={products} /> : <p>Loading...</p>
     );
 
 }
