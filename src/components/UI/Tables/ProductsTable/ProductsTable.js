@@ -39,7 +39,7 @@ const ProductsTable = ({ data }) => {
                         if (oldData) {
                             const prod = newData;
                             delete prod.tableData;
-                            onUpdateProduct({ id: oldData.tableData.id, data: prod });
+                            onUpdateProduct({ id: newData.id, ...prod });
                             resolve();
                             setProducts((prevState) => {
                                 const data = [...prevState];
@@ -51,7 +51,8 @@ const ProductsTable = ({ data }) => {
                     }),
                 onRowDelete: (oldData) =>
                     new Promise((resolve, reject) => {
-                        onRemoveProduct(oldData.tableData.id);
+                        console.log(oldData);
+                        onRemoveProduct(oldData.id);
                         resolve();
                         setProducts((prevState) => {
                             const data = [...prevState];

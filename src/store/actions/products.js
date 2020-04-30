@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import db from '../../firebase'
-const BASE_PRODUCTS_URL = "https://market-calculator-20bb3.firebaseio.com/";
+const PRODUCTS_COLLECTION = db.collection('products');
 
 export const onLoadSuccessProducts = (products) => {
     return {
@@ -40,7 +40,7 @@ export const onLoadErrorProducts = (error) => {
 export const onLoadProducts = () => {
     return (dispatch, getState) => {
         const products = [];
-        db.collection("products").get().then((querySnapshot) => {
+        PRODUCTS_COLLECTION.get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 products.push({ id: doc.id, ...doc.data() })
             });
@@ -53,11 +53,11 @@ export const onLoadProducts = () => {
 
 export const addProduct = (product) => {
     return (dispatch, getState) => {
-        db.collection("products").add(product)
-            .then(function (docRef) {
+        PRODUCTS_COLLECTION.add(product)
+            .then((docRef) => {
                 dispatch(onAddSuccessProduct({ ...product, id: docRef.id }));
             })
-            .catch(function (error) {
+            .catch(error => {
                 dispatch(onLoadErrorProducts(error));
             });
     };
@@ -65,38 +65,20 @@ export const addProduct = (product) => {
 
 export const removeProduct = (id) => {
     return (dispatch, getState) => {
-        dispatch(onRemoveProduct(id));
-        // fetch(BASE_PRODUCTS_URL + 'products.json', {
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(product)
-        // })
-        //     .then(response => response.json())
-        //     .then(res => {
-        //         dispatch(onAddSuccessProduct(product));
-        //     }).catch(err => {
-        //         dispatch(onLoadErrorProducts(err));
-        //     });
+        PRODUCTS_COLLECTION.doc(id).delete().then(() => {
+            dispatch(onRemoveProduct(id));
+        }).catch(error => {
+            dispatch(onLoadErrorProducts(error));
+        });
     };
 }
 
 export const udpateProduct = (product) => {
     return (dispatch, getState) => {
-        dispatch(onUpdateProduct(product));
-        // fetch(BASE_PRODUCTS_URL + 'products.json', {
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(product)
-        // })
-        //     .then(response => response.json())
-        //     .then(res => {
-        //         dispatch(onAddSuccessProduct(product));
-        //     }).catch(err => {
-        //         dispatch(onLoadErrorProducts(err));
-        //     });
-    };
+        PRODUCTS_COLLECTION.doc(product.id).set(product).then(() => {
+            dispatch(onUpdateProduct(product));
+        }).catch(error => {
+            dispatch(onLoadErrorProducts(error));
+        });
+    }
 }
