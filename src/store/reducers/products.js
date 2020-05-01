@@ -31,7 +31,8 @@ const reducer = (state = initialState, action) => {
 
         case actionTypes.REMOVE_PRODUCT: {
             const products = [...state.products];
-            products.splice(action.payload, 1);
+            const index = products.findIndex(p => p.id === action.payload);
+            products.splice(index, 1);
             return {
                 products,
                 error: null
@@ -39,9 +40,9 @@ const reducer = (state = initialState, action) => {
         }
 
         case actionTypes.UPDATE_PRODUCT: {
-            const updatedProduct = action.payload.data;
+            const updatedProduct = action.payload;
             const products = [...state.products];
-            const index = action.payload.id;
+            const index = products.findIndex(p => p.id === action.payload.id);
             products[index] = updatedProduct;
             return {
                 products,
