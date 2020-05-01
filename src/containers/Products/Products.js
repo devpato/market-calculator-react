@@ -6,7 +6,7 @@ import ProductsTable from '../../components/UI/Tables/ProductsTable/ProductsTabl
 
 const Products = (props) => {
 
-    const products = useSelector(state => state.products);
+    const products = useSelector(state => state.productsReducer.products);
     const dispatch = useDispatch();
     const onLoadProducts = useCallback(() => dispatch(actionCreators.onLoadProducts()), [dispatch]);
 

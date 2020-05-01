@@ -17,47 +17,31 @@ const ProductsTable = ({ data }) => {
         { title: 'Unidad', field: 'unidad', type: 'string' },
     ];
     const [products, setProducts] = useState(data);
-
     return (
         <MaterialTable
             title="Productos"
             columns={columns}
-            data={products}
+            data={data}
             editable={{
                 onRowAdd: (newData) =>
                     new Promise((resolve, reject) => {
+                        delete newData.tableData;
+                        console.log(newData);
                         onAddProduct(newData);
-                        setProducts((prevState) => {
-                            const data = [...prevState];
-                            data.push(newData);
-                            return [...data];
-                        });
                         resolve();
                     }),
                 onRowUpdate: (newData, oldData) =>
                     new Promise((resolve, reject) => {
                         if (oldData) {
                             const prod = newData;
-                            delete prod.tableData;
-                            onUpdateProduct({ id: newData.id, ...prod });
-                            setProducts((prevState) => {
-                                const data = [...prevState];
-                                const id = oldData.tableData.id;
-                                data[id] = newData;
-                                return data;
-                            });
+                            onUpdateProduct({ id: prod.id, ...prod });
                             resolve();
                         }
                     }),
                 onRowDelete: (oldData) =>
                     new Promise((resolve, reject) => {
                         onRemoveProduct(oldData.id);
-                        setProducts((prevState) => {
-                            const data = [...prevState];
-                            data.splice(oldData.tableData.id, 1);
-                            return data
-                        });
-                        resolve();
+                        reject();
                     }),
             }}
         />

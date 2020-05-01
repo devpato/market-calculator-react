@@ -7,7 +7,7 @@ import styles from './NewOrder.module.css';
 
 const NewOrder = (pros) => {
 
-    const products = useSelector(state => state.products);
+    const products = useSelector(state => state.productsReducer.products);
     const dispatch = useDispatch();
     const onLoadProducts = useCallback(() => dispatch(actionCreators.onLoadProducts()), [dispatch]);
 
