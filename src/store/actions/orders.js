@@ -32,7 +32,7 @@ export const onUpdateOrder = (orders) => {
 
 export const onLoadErrorOrders = (error) => {
     return {
-        type: actionTypes.REMOVE_ORDERS,
+        type: actionTypes.ERROR_ORDERS,
         payload: error
     };
 }
